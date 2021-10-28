@@ -28,6 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
+from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
@@ -38,13 +39,78 @@ los mismos.
 """
 
 # Construccion de modelos
+def newAnalyzer():
+    """ Inicializa el analizador
 
+    Crea una lista vacia para guardar todos los crimenes
+    Se crean indices (Maps) por los siguientes criterios:
+    -Fechas
+
+    Retorna el analizador inicializado.
+    """
+    analyzer = {'Avistamientos': None,
+                'ciudadIndex': None
+                }
+
+    analyzer['Avistamientos'] = lt.newList('SINGLE_LINKED', compareDates)
+    analyzer['ciudadIndex'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareDates)
+    return analyzer
 # Funciones para agregar informacion al catalogo
+def addUFO(analyzer, UFO):
+    lt.addLast(analyzer['Avistamientos'], UFO)
+    updateCiudadIndex(analyzer['ciudadIndex'], UFO)
+    return analyzer
 
+def updateCiudadIndex(map, UFO):
+    ciudad = UFO['city']
+    entrada = om.get(map, ciudad)
+    if entrada is None:
+        entrada_ciudad = NewDataEntry(UFO)
+        om.put(map, ciudad, entrada_ciudad)
+    else:
+        entrada_ciudad = me.getValue(entrada)
+        addCiudadIndex(entrada_ciudad, UFO)
+    return map
+
+def NewDataEntry(UFO):
+    entrada = {'FirstUFO': None}
+    entrada['FirstUFO'] = lt.newList('ARRAY_LIST', compareDates)
+    first = entrada['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada
+
+def addCiudadIndex(entrada_ciudad, UFO):
+    first = entrada_ciudad['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada_ciudad
 # Funciones para creacion de datos
 
 # Funciones de consulta
+def indexAltura(analyzer):
+    return om.height(analyzer['ciudadIndex'])
 
+
+def indexSize(analyzer):
+    return om.size(analyzer['ciudadIndex'])
+
+
+def minKey(analyzer):
+    return om.minKey(analyzer['ciudadIndex'])
+
+
+def maxKey(analyzer):
+    return om.maxKey(analyzer['ciudadIndex'])
+
+def UFOSSize(analyzer):
+    return lt.size(analyzer['Avistamientos'])
 # Funciones utilizadas para comparar elementos dentro de una lista
-
+def compareDates(date1, date2):
+    
+    if (date1 > date2):
+        return 1
+    elif (date1 == date2):
+        return 0
+    else:
+        return -1
 # Funciones de ordenamiento
