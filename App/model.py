@@ -91,7 +91,7 @@ def addCiudadIndex(entrada_ciudad, UFO):
 
 #Funciones para MAPReq 2 (David)
 def updateSegundosIndex(map, UFO):
-    segundos = UFO["duration (seconds)"]
+    segundos = float(UFO["duration (seconds)"])
     entrada = om.get(map, segundos)
     if entrada is None:
         entrada_segundos = NewSecondsEntry(UFO)
