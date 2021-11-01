@@ -55,6 +55,8 @@ def newAnalyzer():
     analyzer['Avistamientos'] = lt.newList('SINGLE_LINKED', compareDates)
     analyzer['ciudadIndex'] = om.newMap(omaptype='RBT',
                                       comparefunction=compareDates)
+    analyzer["duration_seconds"] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareSeconds)
     return analyzer
 # Funciones para agregar informacion al catalogo
 def addUFO(analyzer, UFO):
@@ -110,6 +112,14 @@ def compareDates(date1, date2):
     if (date1 > date2):
         return 1
     elif (date1 == date2):
+        return 0
+    else:
+        return -1
+
+def compareSeconds(second1, second2):
+    if (second1 > second2):
+        return 1
+    elif (second1 == second2):
         return 0
     else:
         return -1
