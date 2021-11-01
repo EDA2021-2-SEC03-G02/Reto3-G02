@@ -97,8 +97,9 @@ while True:
         print('Llave menor: ' + str(controller.minKey(cont)))
 
     elif int(inputs[0]) == 4:
-        print("Llave menor: " + str(controller.minKeySeconds(cont)))
-        print("Llave mayor: " + str(controller.maxKeySeconds(cont)))
+        second1 = float(input("Porfavor seleccione la cantidad de segundos con la cual desea iniciar el rango: "))
+        second2 = float(input("Porfavor seleccione la cantidad de segundos con la cual desea finalizar el rango: "))
+        print("La duración máxima (en segundos) fue de : " + str(controller.maxKeySeconds(cont)) + " segundos. \nEsta duración la tuvieron " + str(controller.SizeMaxKeySeconds(cont)) + " avistamientos.")
     elif int(inputs[0]) == 5:
         pass
     elif int(inputs[0]) == 6:

@@ -115,12 +115,17 @@ def addSecondsIndex(entrada_ciudad, UFO):
     return entrada_ciudad
 
 #Funciones de consulta Req 2 (David)
-def minKeySeconds(analyzer):
-    return om.minKey(analyzer["duration_seconds"])
 
 
 def maxKeySeconds(analyzer):
     return om.maxKey(analyzer['duration_seconds'])
+
+def SizeMaxKeySeconds(analyzer):
+    llave = maxKeySeconds(analyzer)
+    entry = om.get(analyzer["duration_seconds"], llave)
+    dicc = me.getValue(entry)
+    mapa = dicc["FirstUFO"]
+    return om.size(mapa)
 
 # Funciones para creacion de datos
 
