@@ -94,9 +94,18 @@ def updateSegundosIndex(map, UFO):
     segundos = UFO["duration (seconds)"]
     entrada = om.get(map, segundos)
     if entrada is None:
-        None
+        entrada_segundos = NewSecondsEntry(UFO)
+        om.put(map, segundos, entrada_segundos)
+    else:
+        entrada_segundos = me.getValue(entrada)
 
-
+def NewSecondsEntry(UFO):
+    entrada = {"FirstUFO": None}
+    entrada["FirstUFO"] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareNames)
+    first = entrada['FirstUFO']
+    om.put(first, UFO["city"], UFO)
+    return entrada
 # Funciones para creacion de datos
 
 # Funciones de consulta
@@ -131,6 +140,14 @@ def compareSeconds(second1, second2):
     if (second1 > second2):
         return 1
     elif (second1 == second2):
+        return 0
+    else:
+        return -1
+
+def compareNames(name1, name2):
+    if (name1>name2):
+        return 1
+    elif name1==name2:
         return 0
     else:
         return -1
