@@ -98,6 +98,8 @@ def updateSegundosIndex(map, UFO):
         om.put(map, segundos, entrada_segundos)
     else:
         entrada_segundos = me.getValue(entrada)
+        addSecondsIndex(entrada_segundos, UFO)
+    return map
 
 def NewSecondsEntry(UFO):
     entrada = {"FirstUFO": None}
@@ -106,6 +108,12 @@ def NewSecondsEntry(UFO):
     first = entrada['FirstUFO']
     om.put(first, UFO["city"], UFO)
     return entrada
+
+def addSecondsIndex(entrada_ciudad, UFO):
+    first = entrada_ciudad["FirstUFO"]
+    om.put(first, UFO["city"], UFO)
+    return entrada_ciudad
+
 # Funciones para creacion de datos
 
 # Funciones de consulta
