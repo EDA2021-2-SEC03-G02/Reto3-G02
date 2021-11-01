@@ -89,7 +89,7 @@ def addCiudadIndex(entrada_ciudad, UFO):
     return entrada_ciudad
 
 
-#Funciones Req 2 (David)
+#Funciones para MAPReq 2 (David)
 def updateSegundosIndex(map, UFO):
     segundos = UFO["duration (seconds)"]
     entrada = om.get(map, segundos)
@@ -113,6 +113,14 @@ def addSecondsIndex(entrada_ciudad, UFO):
     first = entrada_ciudad["FirstUFO"]
     om.put(first, UFO["city"], UFO)
     return entrada_ciudad
+
+#Funciones de consulta Req 2 (David)
+def minKeySeconds(analyzer):
+    return om.minKey(analyzer["duration_seconds"])
+
+
+def maxKeySeconds(analyzer):
+    return om.maxKey(analyzer['duration_seconds'])
 
 # Funciones para creacion de datos
 

@@ -97,7 +97,8 @@ while True:
         print('Llave menor: ' + str(controller.minKey(cont)))
 
     elif int(inputs[0]) == 4:
-        pass
+        print("Llave menor: " + str(controller.minKeySeconds(cont)))
+        print("Llave mayor: " + str(controller.maxKeySeconds(cont)))
     elif int(inputs[0]) == 5:
         pass
     elif int(inputs[0]) == 6:

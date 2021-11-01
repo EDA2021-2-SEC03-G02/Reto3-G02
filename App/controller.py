@@ -85,3 +85,9 @@ def maxKey(analyzer):
     La mayor llave del arbol
     """
     return model.maxKey(analyzer)
+
+#Req 2
+def maxKeySeconds(analyzer):
+    return model.maxKeySeconds(analyzer)
+def minKeySeconds(analyzer):
+    return model.minKeySeconds(analyzer)
