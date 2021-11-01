@@ -62,6 +62,7 @@ def newAnalyzer():
 def addUFO(analyzer, UFO):
     lt.addLast(analyzer['Avistamientos'], UFO)
     updateCiudadIndex(analyzer['ciudadIndex'], UFO)
+    updateSegundosIndex(analyzer["duration_seconds"], UFO)
     return analyzer
 
 def updateCiudadIndex(map, UFO):
@@ -86,6 +87,16 @@ def addCiudadIndex(entrada_ciudad, UFO):
     first = entrada_ciudad['FirstUFO']
     lt.addLast(first, UFO)
     return entrada_ciudad
+
+
+#Funciones Req 2 (David)
+def updateSegundosIndex(map, UFO):
+    segundos = UFO["duration (seconds)"]
+    entrada = om.get(map, segundos)
+    if entrada is None:
+        None
+
+
 # Funciones para creacion de datos
 
 # Funciones de consulta
