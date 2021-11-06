@@ -127,6 +127,22 @@ def SizeMaxKeySeconds(analyzer):
     mapa = dicc["FirstUFO"]
     return om.size(mapa)
 
+def getMin3(analyzer, second1, second2):
+    mapa = analyzer["duration_seconds"]
+    lista = RangoDuracion(analyzer, second1, second2)
+    primeros3 = lt.subList(lista, 1, 3)
+    for element in lt.iterator(primeros3):
+        print(element)
+    
+
+def RangoDuracion(analyzer, second1, second2):
+    mapa = analyzer["duration_seconds"]
+    lista = om.keys(mapa, second1, second2)
+    """for element in lt.iterator(lista):
+        print(element)"""
+    return lista
+
+
 # Funciones para creacion de datos
 
 # Funciones de consulta

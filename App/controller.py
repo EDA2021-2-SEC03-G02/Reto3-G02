@@ -91,3 +91,7 @@ def maxKeySeconds(analyzer):
     return model.maxKeySeconds(analyzer)
 def SizeMaxKeySeconds(analyzer):
     return model.SizeMaxKeySeconds(analyzer)
+def getMin3(analyzer, second1, second2):
+    return model.getMin3(analyzer, second1, second2)
+def RangoDuracion(analyzer, second1, second2):
+    return model.RangoDuracion(analyzer, second1, second2)
