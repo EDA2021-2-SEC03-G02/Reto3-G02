@@ -127,19 +127,86 @@ def SizeMaxKeySeconds(analyzer):
     mapa = dicc["FirstUFO"]
     return om.size(mapa)
 
-def getMin3(analyzer, second1, second2):
+def getMin3yMax3(analyzer, second1, second2):
     mapa = analyzer["duration_seconds"]
     lista = RangoDuracion(analyzer, second1, second2)
     primeros3 = lt.subList(lista, 1, 3)
-    for element in lt.iterator(primeros3):
-        print(element)
+    ultimos3 = lt.subList(lista, lt.size(lista)-2, 3)
+    return primeros3, ultimos3
+
+def SizeKey(analyzer, llave):
+    entry = om.get(analyzer["duration_seconds"], llave)
+    dicc = me.getValue(entry)
+    mapa = dicc["FirstUFO"]
+    return om.size(mapa)
+
+
+def getMin3(analyzer, primeras_llaves):
+    lista = lt.newList(cmpfunction=compareNames)
+    #para primera llave
+    llave1 = lt.getElement(primeras_llaves, 1)
+    entry1 = om.get(analyzer["duration_seconds"], llave1)
+    dicc1 = me.getValue(entry1)
+    mapa1 = dicc1["FirstUFO"]
+    valores1 = om.valueSet(mapa1)
+    for element in lt.iterator(valores1):
+        lt.addLast(lista, element)
+    #para segunda llave
+    llave2 = lt.getElement(primeras_llaves, 2)
+    entry2 = om.get(analyzer["duration_seconds"], llave2)
+    dicc2 = me.getValue(entry2)
+    mapa2 = dicc2["FirstUFO"]
+    valores2 = om.valueSet(mapa2)
+    for element in lt.iterator(valores2):
+        lt.addLast(lista, element)
+    #para tercera llave
+    llave3 = lt.getElement(primeras_llaves, 3)
+    entry3 = om.get(analyzer["duration_seconds"], llave3)
+    dicc3 = me.getValue(entry3)
+    mapa3 = dicc3["FirstUFO"]
+    valores3 = om.valueSet(mapa3)
+    for element in lt.iterator(valores3):
+        lt.addLast(lista, element)
+    min3 = lt.subList(lista, 1, 3)
+    return min3
+
+def getMax3(analyzer, ultimas_llaves):
+    lista = lt.newList(cmpfunction=compareNames)
+    #para primera llave
+    llave1 = lt.getElement(ultimas_llaves, 1)
+    entry1 = om.get(analyzer["duration_seconds"], llave1)
+    dicc1 = me.getValue(entry1)
+    mapa1 = dicc1["FirstUFO"]
+    valores1 = om.valueSet(mapa1)
+    for element in lt.iterator(valores1):
+        lt.addLast(lista, element)
+    #para segunda llave
+    llave2 = lt.getElement(ultimas_llaves, 2)
+    entry2 = om.get(analyzer["duration_seconds"], llave2)
+    dicc2 = me.getValue(entry2)
+    mapa2 = dicc2["FirstUFO"]
+    valores2 = om.valueSet(mapa2)
+    for element in lt.iterator(valores2):
+        lt.addLast(lista, element)
+    #para tercera llave
+    llave3 = lt.getElement(ultimas_llaves, 3)
+    entry3 = om.get(analyzer["duration_seconds"], llave3)
+    dicc3 = me.getValue(entry3)
+    mapa3 = dicc3["FirstUFO"]
+    valores3 = om.valueSet(mapa3)
+    for element in lt.iterator(valores3):
+        lt.addLast(lista, element)
+    max3 = lt.subList(lista, lt.size(lista)-2, 3)
+    return max3
+
+
+
+
     
 
 def RangoDuracion(analyzer, second1, second2):
     mapa = analyzer["duration_seconds"]
     lista = om.keys(mapa, second1, second2)
-    """for element in lt.iterator(lista):
-        print(element)"""
     return lista
 
 
