@@ -142,11 +142,19 @@ while True:
         print("Los últimos 3 avistamientos dento del rango son:")
         printDuration(max3)
     elif int(inputs[0]) == 5:
-        pass
+        fecha_1=input('Limite inferior (HH:MM:SS): ')
+        fecha_2=input('Limite superior (HH:MM:SS): ')
+        print('\nSe encontraron ' + str(controller.indexSize(cont['timeIndex'])) + ' avistamientos con distintas horas')
+        result= controller.BuscarEnRangoDeHoras(cont['timeIndex'], fecha_1,fecha_2)
+        print('\nSe encontraron ' + str(result[0]) + ' avistamientos en el rango')
+        print('\nPimeros 3 avistamientos del rango:')
+        printPrimeros3(result[1])
+        print('\nUltimos 3 avistamientos del rango:')
+        printUltimos3(result[1])
     elif int(inputs[0]) == 6:
         fecha_1=input('Limite inferior (AAAA-MM-DD): ')
         fecha_2=input('Limite superior (AAAA-MM-DD): ')
-        print('\nSe encontraron ' + str(controller.indexSize(cont)) + ' avistamientos con distintas fechas')
+        print('\nSe encontraron ' + str(controller.indexSize(cont['dateIndex'])) + ' avistamientos con distintas fechas')
         result = controller.BuscarEnRangoDeFechas(cont['dateIndex'], fecha_1, fecha_2)
         minimo= controller.encontrarMinimo(cont['dateIndex'])
         print('El avistamiento mas antiguo fue en: ' + str(minimo[0]))

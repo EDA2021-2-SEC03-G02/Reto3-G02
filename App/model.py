@@ -62,6 +62,8 @@ def newAnalyzer():
                                       comparefunction=compareSeconds)
     analyzer['dateIndex'] = om.newMap(omaptype='RBT',
                                       comparefunction=compareDates)
+    analyzer['timeIndex'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareDates)
     return analyzer
 # Funciones para agregar informacion al catalogo
 def addUFO(analyzer, UFO):
@@ -70,6 +72,7 @@ def addUFO(analyzer, UFO):
     updateSegundosIndex(analyzer["duration_seconds"], UFO)
     updateCoordinatesIndex(analyzer["coordinates"], UFO)
     updatedateIndex(analyzer['dateIndex'],UFO)
+    updatetimeIndex(analyzer['timeIndex'],UFO)
     return analyzer
 
 # Funciones para MAP Req 1 (David)
@@ -231,6 +234,19 @@ def RangoDuracion(analyzer, second1, second2):
     return lista
 
 #Funciones req 3
+def updatetimeIndex(map, UFO):
+    date1 = UFO['datetime']
+    datetm1= datetime.datetime.strptime(date1, '%Y-%m-%d %H:%M:%S')
+    date = datetm1.time()
+    entry = om.get(map, date)
+    if entry is None:
+        dateentry = newDateEntry(UFO)
+        om.put(map, date, dateentry)
+    else:
+        dateentry = me.getValue(entry)
+        addCityIndex(dateentry, UFO)
+    return map
+
 def BuscarEnRangoDeHoras(cont, fecha_1, fecha_2):
     Datein= datetime.datetime.strptime(fecha_1, '%H:%M:%S')
     fechain=Datein.time()
@@ -243,7 +259,6 @@ def BuscarEnRangoDeHoras(cont, fecha_1, fecha_2):
         contador += primeros_valores['cuenta']
         for ufo in lt.iterator(primeros_valores['FirstUFO']):
             lt.addLast(primera_entrada, ufo)
-
     return contador, primera_entrada
 #Funciones req 4
 def updatedateIndex(map, UFO):
@@ -326,7 +341,7 @@ def indexAltura(analyzer):
 
 
 def indexSize(analyzer):
-    return om.size(analyzer['dateIndex'])
+    return om.size(analyzer)
 
 
 def minKey(analyzer):
