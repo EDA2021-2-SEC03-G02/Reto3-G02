@@ -316,10 +316,10 @@ def NewLongitudEntry(UFO):
     entrada = {"FirstUFO": None}
     entrada["FirstUFO"] = om.newMap(omaptype='RBT',
                                       comparefunction=compareNames)
-    map = entrada["FisrtUFO"]
+    map = entrada["FirstUFO"]
     latitud = round(float(UFO["latitude"]), 2)
-    entrada = om.get(map, latitud)
-    if entrada is None:
+    entrada1 = om.get(map, latitud)
+    if entrada1 is None:
         entrada_latitud = NewLatitudeEntry(UFO)
         om.put(map, latitud, entrada_latitud)
     else:
