@@ -77,7 +77,26 @@ def printUltimosUFOS(analyzer):
 
 def printDuration(lista):
     for element in lt.iterator(lista):
-        print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+        print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"] + ", Longitud: " +element["longitude"] + ", Latitud: " +element["latitude"])
+
+def printCoordinates(lista):
+    if lt.size(lista) < 10:
+        print("La cantidad de avistamientos en la zona geográfica es menor a 10, por lo que no se mostrarán los primeros 5 y últimos 5 avistamientos, sino todos los avistamientos")
+        for element in lt.iterator(lista):
+            print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+    else:
+        print(("La cantidad de avistamientos en la zona geográfica es igual o mayor a 10, por lo que se mostrarán los primeros y últimos 5 elementos: "))
+        print("A continuación, los primeros 5")
+        primeros5 = lt.subList(lista, 1, 5)
+        for element in lt.iterator(primeros5):
+            print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+        print("Ahora, los últimos 5: ")
+        ultimos5 = lt.subList(lista, lt.size(lista)-4, 5)
+        for element in lt.iterator(ultimos5):
+            print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+
+
+
 
 def printPrimeros3(lista):
     i=1
@@ -165,7 +184,12 @@ while True:
         print('\nUltimos 3 avistamientos del rango:')
         printUltimos3(result[1])
     elif int(inputs[0]) == 7:
-        pass
+        longitud1 = float(input("Por favor seleccione el límite inferior de sus longitudes aproximado a dos cifras decimales"))
+        longitud2 = float(input("Por favor seleccione el límite superior de sus longitudes aproximado a dos cifras decimales"))
+        latitud1 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
+        latitud2 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
+        lista_todas = controller.ConseguirTodasEnRangoCoordenadas(cont, longitud1, longitud2, latitud1, latitud2)
+        printCoordinates(lista_todas)
     elif int(inputs[0]) == 8:
         pass
     else:

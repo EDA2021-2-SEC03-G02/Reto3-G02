@@ -115,3 +115,7 @@ def BuscarEnRangoDeFechas(cont, fecha_1, fecha2_):
     return result
 def encontrarMinimo(analyzer):
     return model.encontrarMinimo(analyzer)
+
+#Req 5
+def ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, latitud2):
+    return model.ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, latitud2)

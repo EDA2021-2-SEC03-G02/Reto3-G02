@@ -326,11 +326,65 @@ def updateCoordinatesIndex(map, UFO):
         entrada_longitud = me.getValue(entrada)
         addLongitudIndex(entrada_longitud, UFO)
     return map
-    
+#Crea el mapa nuevo en caso de que la longitud no exista aún    
 def NewLongitudEntry(UFO):
-    None
+    entrada = {"FirstUFO": None}
+    entrada["FirstUFO"] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareNames)
+    map = entrada["FirstUFO"]
+    latitud = round(float(UFO["latitude"]), 2)
+    entrada1 = om.get(map, latitud)
+    if entrada1 is None:
+        entrada_latitud = NewLatitudeEntry(UFO)
+        om.put(map, latitud, entrada_latitud)
+    else:
+        entrada_latitud = me.getValue(entrada)
+        addLatitudIndex(entrada_latitud, UFO)
+    return entrada
+
+def NewLatitudeEntry(UFO):
+    entrada = {'FirstUFO': None}
+    entrada['FirstUFO'] = lt.newList('ARRAY_LIST', compareDates)
+    first = entrada['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada
+def addLatitudIndex(entrada_latitud, UFO):
+    first = entrada_latitud['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada_latitud
+
 def addLongitudIndex(entrada_longitud, UFO):
-    None
+    first = entrada_longitud["FirstUFO"]
+    latitud = round(float(UFO["latitude"]), 2)
+    entrada = om.get(first, latitud)
+    if entrada is None:
+        entrada_latitud = NewLatitudeEntry(UFO)
+        om.put(first, latitud, entrada_latitud)
+    else:
+        entrada_latitud = me.getValue(entrada)
+        addLatitudIndex(entrada_latitud, UFO)
+    return entrada_longitud
+
+#Funciones de consulta Req 5 (David)
+
+def ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, latitud2):
+    gran_lista = lt.newList(cmpfunction=compareNames)
+    mapa = analyzer["coordinates"]
+    lista_longitud = om.keys(mapa, longitud1, longitud2)
+    print(lista_longitud)
+    for llave in lt.iterator(lista_longitud):
+        entry = om.get(mapa, llave)
+        dicc = me.getValue(entry)
+        mapa_latitudes = dicc["FirstUFO"]
+        lista_latitudes = om.keys(mapa_latitudes, latitud1, latitud2)
+        for llave1 in lt.iterator(lista_latitudes):
+            entry = om.get(mapa_latitudes, llave1)
+            dicc1 = me.getValue(entry)
+            lista_ufo = dicc1["FirstUFO"]
+            for element in lt.iterator(lista_ufo):
+                lt.addLast(gran_lista, element)
+    return gran_lista
+
 
 
 
