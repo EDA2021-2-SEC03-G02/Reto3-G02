@@ -237,15 +237,17 @@ def RangoDuracion(analyzer, second1, second2):
 def updatetimeIndex(map, UFO):
     date1 = UFO['datetime']
     datetm1= datetime.datetime.strptime(date1, '%Y-%m-%d %H:%M:%S')
-    date = datetm1.time()
-    entry = om.get(map, date)
+    time = datetm1.time()
+    entry = om.get(map, time)
     if entry is None:
         dateentry = newDateEntry(UFO)
-        om.put(map, date, dateentry)
+        om.put(map, time, dateentry)
     else:
         dateentry = me.getValue(entry)
         addCityIndex(dateentry, UFO)
     return map
+
+    
 
 def BuscarEnRangoDeHoras(cont, fecha_1, fecha_2):
     Datein= datetime.datetime.strptime(fecha_1, '%H:%M:%S')
@@ -283,7 +285,6 @@ def newDateEntry(UFO):
     lt.addLast(First, UFO)
     entry['cuenta']+= 1
     return entry
-
 def addCityIndex(entrada_ciudad, UFO):
     first= entrada_ciudad['FirstUFO']
     lt.addLast(first,UFO)
