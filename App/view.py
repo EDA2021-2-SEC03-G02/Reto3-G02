@@ -157,7 +157,11 @@ while True:
         print('\nUltimos 3 avistamientos del rango:')
         printUltimos3(result[1])
     elif int(inputs[0]) == 7:
-        pass
+        longitud1 = float(input("Por favor seleccione el límite inferior de sus longitudes aproximado a dos cifras decimales"))
+        longitud2 = float(input("Por favor seleccione el límite superior de sus longitudes aproximado a dos cifras decimales"))
+        latitud1 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
+        latitud2 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
+        lista_todas = controller.ConseguirTodasEnRangoCoordenadas(cont, longitud1, longitud2, latitud1, latitud2)
     elif int(inputs[0]) == 8:
         pass
     else:
