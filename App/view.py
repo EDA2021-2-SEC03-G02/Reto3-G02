@@ -77,7 +77,12 @@ def printUltimosUFOS(analyzer):
 
 def printDuration(lista):
     for element in lt.iterator(lista):
+        print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"] + ", Longitud: " +element["longitude"] + ", Latitud: " +element["latitude"])
+
+def printCoordinates(lista):
+    for element in lt.iterator(lista):
         print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+
 
 def printPrimeros3(lista):
     i=1
@@ -162,6 +167,7 @@ while True:
         latitud1 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
         latitud2 = float(input("Por favor seleccione el límite inferior de sus latitudes aproximado a dos cifras decimales"))
         lista_todas = controller.ConseguirTodasEnRangoCoordenadas(cont, longitud1, longitud2, latitud1, latitud2)
+        printCoordinates(lista_todas)
     elif int(inputs[0]) == 8:
         pass
     else:
