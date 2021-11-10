@@ -67,7 +67,7 @@ def printPrimerosUFOS(analyzer):
 def printUltimosUFOS(analyzer):
     print('Los ultimos 5 Avistamientos de UFOS son: \n')
     avistamientos = analyzer['Avistamientos']
-    size = lt.size(analyzer['Avistamientos'])
+    size = lt.size(avistamientos)
     i = size
     while i in range (size-4, size+1):
         avistamiento = lt.getElement(avistamientos,i)
@@ -78,6 +78,23 @@ def printUltimosUFOS(analyzer):
 def printDuration(lista):
     for element in lt.iterator(lista):
         print("Fecha y hora: " + element["datetime"] + ", Ciudad: " + element['city'] +', Pais: ' + element['country'] + ", Duracion en Segundos: " + element["duration (seconds)"] + ", Forma del Objeto: " +element["shape"])
+
+def printPrimeros3(lista):
+    i=1
+    while i in range (1,4):
+        avistamiento = lt.getElement(lista,i)
+        print('Fecha: ' + avistamiento['datetime'] +", Ciudad: " + avistamiento['city'] +', Pais: ' + avistamiento['country']+ ', Forma: '+ avistamiento['shape']+', Duracion(segundos): '+avistamiento['duration (seconds)'])
+        i+=1
+    pass
+
+def printUltimos3(lista):
+    size = lt.size(lista)
+    i = size
+    while i in range (size-2, size+1):
+        avistamiento = lt.getElement(lista,i)
+        print('Fecha: ' + avistamiento['datetime'] +", Ciudad: " + avistamiento['city'] +', Pais: ' + avistamiento['country']+', Forma: '+ avistamiento['shape']+', Duracion(segundos): '+avistamiento['duration (seconds)'])
+        i-=1
+    pass
 
 
 
@@ -96,7 +113,7 @@ while True:
         printUltimosUFOS(cont)
 
     elif int(inputs[0]) == 3:
-        ciudad = input("Por favor indique la ciudad en la cual quiere hacer la búsqueda")
+        ciudad = input("Por favor indique la ciudad en la cual quiere hacer la búsqueda: ")
         print("La ciudad que eligió tiene un total de " + str(controller.FindCity(cont, ciudad)[2])+ " avistamientos")
         primeros3 = controller.FindCity(cont, ciudad)[0]
         ultimos3 = controller.FindCity(cont, ciudad)[1]
@@ -127,7 +144,18 @@ while True:
     elif int(inputs[0]) == 5:
         pass
     elif int(inputs[0]) == 6:
-        pass
+        fecha_1=input('Limite inferior (AAAA-MM-DD): ')
+        fecha_2=input('Limite superior (AAAA-MM-DD): ')
+        print('\nSe encontraron ' + str(controller.indexSize(cont)) + ' avistamientos con distintas fechas')
+        result = controller.BuscarEnRangoDeFechas(cont['dateIndex'], fecha_1, fecha_2)
+        minimo= controller.encontrarMinimo(cont['dateIndex'])
+        print('El avistamiento mas antiguo fue en: ' + str(minimo[0]))
+        print('Numero de avistamientos del dia del avistamiento más antiguo : ' + str(minimo[1]))
+        print('\nSe encontraron ' + str(result[0]) + ' avistamientos en el rango')
+        print('\nPimeros 3 avistamientos del rango:')
+        printPrimeros3(result[1])
+        print('\nUltimos 3 avistamientos del rango:')
+        printUltimos3(result[1])
     elif int(inputs[0]) == 7:
         pass
     elif int(inputs[0]) == 8:

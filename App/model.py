@@ -60,6 +60,8 @@ def newAnalyzer():
                                       comparefunction=compareSeconds)
     analyzer["coordinates"] = om.newMap(omaptype='RBT',
                                       comparefunction=compareSeconds)
+    analyzer['dateIndex'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareDates)
     return analyzer
 # Funciones para agregar informacion al catalogo
 def addUFO(analyzer, UFO):
@@ -67,6 +69,7 @@ def addUFO(analyzer, UFO):
     updateCiudadIndex(analyzer['ciudadIndex'], UFO)
     updateSegundosIndex(analyzer["duration_seconds"], UFO)
     updateCoordinatesIndex(analyzer["coordinates"], UFO)
+    updatedateIndex(analyzer['dateIndex'],UFO)
     return analyzer
 
 # Funciones para MAP Req 1 (David)
@@ -227,6 +230,76 @@ def RangoDuracion(analyzer, second1, second2):
     lista = om.keys(mapa, second1, second2)
     return lista
 
+#Funciones req 3
+def BuscarEnRangoDeHoras(cont, fecha_1, fecha_2):
+    Datein= datetime.datetime.strptime(fecha_1, '%H:%M:%S')
+    fechain=Datein.time()
+    Datefin= datetime.datetime.strptime(fecha_2, '%H:%M:%S')
+    fechafin=Datefin.time()
+    valores= om.values(cont, fechain, fechafin)
+    contador=0
+    primera_entrada= lt.newList("ARRAY_LIST")
+    for primeros_valores in lt.iterator(valores):
+        contador += primeros_valores['cuenta']
+        for ufo in lt.iterator(primeros_valores['FirstUFO']):
+            lt.addLast(primera_entrada, ufo)
+
+    return contador, primera_entrada
+#Funciones req 4
+def updatedateIndex(map, UFO):
+    date1 = UFO['datetime']
+    datetm1= datetime.datetime.strptime(date1, '%Y-%m-%d %H:%M:%S')
+    date = datetm1.date()
+    entry = om.get(map, date)
+    if entry is None:
+        dateentry = newDateEntry(UFO)
+        om.put(map, date, dateentry)
+    else:
+        dateentry = me.getValue(entry)
+        addCityIndex(dateentry, UFO)
+    return map
+
+
+
+def newDateEntry(UFO):
+    entry = {'FirstUFO': None, 'cuenta':0}
+    entry['FirstUFO'] = lt.newList('ARRAY_LIST', compareDates)
+    First = entry['FirstUFO']
+    lt.addLast(First, UFO)
+    entry['cuenta']+= 1
+    return entry
+
+def addCityIndex(entrada_ciudad, UFO):
+    first= entrada_ciudad['FirstUFO']
+    lt.addLast(first,UFO)
+    entrada_ciudad['cuenta']+=1
+    return entrada_ciudad
+
+
+def BuscarEnRangoDeFechas(cont, fecha_1, fecha_2):
+    Datein= datetime.datetime.strptime(fecha_1, '%Y-%m-%d')
+    fechain=Datein.date()
+    Datefin= datetime.datetime.strptime(fecha_2, '%Y-%m-%d')
+    fechafin=Datefin.date()
+    valores= om.values(cont, fechain, fechafin)
+    contador=0
+    primera_entrada= lt.newList("ARRAY_LIST")
+    for primeros_valores in lt.iterator(valores):
+        contador += primeros_valores['cuenta']
+        for ufo in lt.iterator(primeros_valores['FirstUFO']):
+            lt.addLast(primera_entrada, ufo)
+
+    return contador, primera_entrada
+
+def encontrarMinimo(analyzer):
+    llavemin = om.minKey(analyzer)
+    entradamin = om.get(analyzer,llavemin)
+    contador=lt.size(entradamin)
+
+    return llavemin , contador
+
+
+
 #Funciones para MAP Req 5 (David)
 def updateCoordinatesIndex(map, UFO):
     longitud = round(float(UFO["longitude"]), 2)
@@ -253,7 +326,7 @@ def indexAltura(analyzer):
 
 
 def indexSize(analyzer):
-    return om.size(analyzer['ciudadIndex'])
+    return om.size(analyzer['dateIndex'])
 
 
 def minKey(analyzer):
@@ -264,7 +337,7 @@ def maxKey(analyzer):
     return om.maxKey(analyzer['ciudadIndex'])
 
 def UFOSSize(analyzer):
-    return lt.size(analyzer['Avistamientos'])
+    return lt.size(analyzer["Avistamientos"])
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareDates(date1, date2):
     
@@ -291,3 +364,12 @@ def compareNames(name1, name2):
     else:
         return -1
 # Funciones de ordenamiento
+
+
+
+horain= datetime.datetime.strptime("1900-05-02 20:45:00", '%Y-%m-%d %H:%M:%S')
+fechain= horain.time()
+horafin= datetime.datetime.strptime("1900-05-02 20:55:00", '%Y-%m-%d %H:%M:%S')
+fechafin= horafin.time()
+boool=fechain<fechafin
+print(boool)

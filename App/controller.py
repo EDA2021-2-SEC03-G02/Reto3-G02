@@ -86,6 +86,10 @@ def maxKey(analyzer):
     """
     return model.maxKey(analyzer)
 
+#Req 1
+def FindCity(analyzer, ciudad):
+    return model.FindCity(analyzer, ciudad)
+
 #Req 2
 def maxKeySeconds(analyzer):
     return model.maxKeySeconds(analyzer)
@@ -99,6 +103,15 @@ def getMin3(analyzer, primeras_llaves):
     return model.getMin3(analyzer, primeras_llaves)
 def getMax3(analyzer, ultimas_llaves):
     return model.getMax3(analyzer, ultimas_llaves)
-def FindCity(analyzer, ciudad):
-    return model.FindCity(analyzer, ciudad)
+#Req 3
+def BuscarEnRangoDeHoras(cont, fecha_1, fecha2_):
+    return model.BuscarEnRangoDeHoras(cont, fecha_1, fecha2_)
     
+
+
+#Req 4
+def BuscarEnRangoDeFechas(cont, fecha_1, fecha2_):
+    result=model.BuscarEnRangoDeFechas(cont, fecha_1, fecha2_)
+    return result
+def encontrarMinimo(analyzer):
+    return model.encontrarMinimo(analyzer)
