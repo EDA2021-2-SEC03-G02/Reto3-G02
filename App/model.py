@@ -57,12 +57,15 @@ def newAnalyzer():
                                       comparefunction=compareDates)
     analyzer["duration_seconds"] = om.newMap(omaptype='RBT',
                                       comparefunction=compareSeconds)
+    analyzer["coordinates"] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareSeconds)
     return analyzer
 # Funciones para agregar informacion al catalogo
 def addUFO(analyzer, UFO):
     lt.addLast(analyzer['Avistamientos'], UFO)
     updateCiudadIndex(analyzer['ciudadIndex'], UFO)
     updateSegundosIndex(analyzer["duration_seconds"], UFO)
+    updateCoordinatesIndex(analyzer["coordinates"], UFO)
     return analyzer
 
 def updateCiudadIndex(map, UFO):
@@ -89,7 +92,7 @@ def addCiudadIndex(entrada_ciudad, UFO):
     return entrada_ciudad
 
 
-#Funciones para MAPReq 2 (David)
+#Funciones para MAP Req 2 (David)
 def updateSegundosIndex(map, UFO):
     segundos = float(UFO["duration (seconds)"])
     entrada = om.get(map, segundos)
@@ -197,20 +200,28 @@ def getMax3(analyzer, ultimas_llaves):
     for element in lt.iterator(valores3):
         lt.addLast(lista, element)
     max3 = lt.subList(lista, lt.size(lista)-2, 3)
-    return max3
-
-
-
-
-    
+    return max3   
 
 def RangoDuracion(analyzer, second1, second2):
     mapa = analyzer["duration_seconds"]
     lista = om.keys(mapa, second1, second2)
     return lista
 
+#Funciones para MAP Req 2 (David)
+def updateCoordinatesIndex(map, UFO):
+    longitud = round(float(UFO["longitude"]), 2)
+    entrada = om.get(map, longitud)
+    if entrada is None:
+        entrada_longitud = NewLongitudEntry(UFO)
+        om.put(map, longitud, entrada_longitud)
+    else:
+        entrada_longitud = me.getValue(entrada)
+        addLongitudIndex(entrada_longitud, UFO)
+    return map
+    
+     
 
-# Funciones para creacion de datos
+
 
 # Funciones de consulta
 def indexAltura(analyzer):
