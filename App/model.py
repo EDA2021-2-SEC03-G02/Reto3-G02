@@ -32,6 +32,7 @@ from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
+import datetime
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -68,28 +69,37 @@ def addUFO(analyzer, UFO):
     updateCoordinatesIndex(analyzer["coordinates"], UFO)
     return analyzer
 
+# Funciones para MAP Req 1 (David)
 def updateCiudadIndex(map, UFO):
     ciudad = UFO['city']
     entrada = om.get(map, ciudad)
     if entrada is None:
-        entrada_ciudad = NewDataEntry(UFO)
+        entrada_ciudad = NewCityEntry(UFO)
         om.put(map, ciudad, entrada_ciudad)
     else:
         entrada_ciudad = me.getValue(entrada)
         addCiudadIndex(entrada_ciudad, UFO)
     return map
 
-def NewDataEntry(UFO):
+def NewCityEntry(UFO):
     entrada = {'FirstUFO': None}
-    entrada['FirstUFO'] = lt.newList('ARRAY_LIST', compareDates)
+    entrada['FirstUFO'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareNames)
     first = entrada['FirstUFO']
-    lt.addLast(first, UFO)
+    occurreddate = UFO["datetime"]
+    crimedate = datetime.datetime.strptime(occurreddate, '%Y-%m-%d %H:%M:%S')
+    om.put(first, crimedate.date(), UFO)
     return entrada
 
 def addCiudadIndex(entrada_ciudad, UFO):
     first = entrada_ciudad['FirstUFO']
-    lt.addLast(first, UFO)
+    occurreddate = UFO["datetime"]
+    crimedate = datetime.datetime.strptime(occurreddate, '%Y-%m-%d %H:%M:%S')
+    om.put(first, crimedate.date(), UFO)
     return entrada_ciudad
+
+#Funciones de consulta Req 1 (David)
+
 
 
 #Funciones para MAP Req 2 (David)
@@ -207,7 +217,7 @@ def RangoDuracion(analyzer, second1, second2):
     lista = om.keys(mapa, second1, second2)
     return lista
 
-#Funciones para MAP Req 2 (David)
+#Funciones para MAP Req 5 (David)
 def updateCoordinatesIndex(map, UFO):
     longitud = round(float(UFO["longitude"]), 2)
     entrada = om.get(map, longitud)
