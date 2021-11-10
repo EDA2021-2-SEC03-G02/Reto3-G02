@@ -313,7 +313,11 @@ def updateCoordinatesIndex(map, UFO):
     return map
     
 def NewLongitudEntry(UFO):
-    None
+    entrada = {"FirstUFO": None}
+    entrada["FirstUFO"] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareNames)
+    mapa = entrada["FisrtUFO"]
+    latitud = None
 def addLongitudIndex(entrada_longitud, UFO):
     None
 
