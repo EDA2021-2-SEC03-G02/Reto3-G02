@@ -219,7 +219,11 @@ def updateCoordinatesIndex(map, UFO):
         addLongitudIndex(entrada_longitud, UFO)
     return map
     
-     
+def NewLongitudEntry(UFO):
+    None
+def addLongitudIndex(entrada_longitud, UFO):
+    None
+
 
 
 
