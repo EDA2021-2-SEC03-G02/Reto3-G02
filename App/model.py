@@ -316,8 +316,27 @@ def NewLongitudEntry(UFO):
     entrada = {"FirstUFO": None}
     entrada["FirstUFO"] = om.newMap(omaptype='RBT',
                                       comparefunction=compareNames)
-    mapa = entrada["FisrtUFO"]
-    latitud = None
+    map = entrada["FisrtUFO"]
+    latitud = round(float(UFO["latitude"]), 2)
+    entrada = om.get(map, latitud)
+    if entrada is None:
+        entrada_latitud = NewLatitudeEntry(UFO)
+        om.put(map, latitud, entrada_latitud)
+    else:
+        entrada_latitud = me.getValue(entrada)
+        addLatitudIndex(entrada_latitud, UFO)
+
+def NewLatitudeEntry(UFO):
+    entrada = {'FirstUFO': None}
+    entrada['FirstUFO'] = lt.newList('ARRAY_LIST', compareDates)
+    first = entrada['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada
+def addLatitudIndex(entrada_latitud, UFO):
+    first = entrada_latitud['FirstUFO']
+    lt.addLast(first, UFO)
+    return entrada_latitud
+
 def addLongitudIndex(entrada_longitud, UFO):
     None
 
