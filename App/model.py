@@ -356,6 +356,7 @@ def ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, l
     gran_lista = lt.newList(cmpfunction=compareNames)
     mapa = analyzer["coordinates"]
     lista_longitud = om.keys(mapa, longitud1, longitud2)
+    print(lista_longitud)
     for llave in lt.iterator(lista_longitud):
         entry = om.get(mapa, llave)
         dicc = me.getValue(entry)
