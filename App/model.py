@@ -350,6 +350,24 @@ def addLongitudIndex(entrada_longitud, UFO):
         addLatitudIndex(entrada_latitud, UFO)
     return entrada_longitud
 
+#Funciones de consulta Req 5 (David)
+
+def ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, latitud2):
+    gran_lista = lt.newList(cmpfunction=compareNames)
+    mapa = analyzer["coordinates"]
+    lista_longitud = om.keys(mapa, longitud1, longitud2)
+    for llave in lt.iterator(lista_longitud):
+        entry = om.get(mapa, llave)
+        dicc = me.getValue(entry)
+        mapa_latitudes = dicc["FirstUFO"]
+        lista_latitudes = om.keys(mapa_latitudes, latitud1, latitud2)
+        for llave1 in lt.iterator(lista_latitudes):
+            entry = om.get(mapa_latitudes, llave1)
+            dicc1 = me.getValue(entry)
+            lista_ufo = dicc1["FirstUFO"]
+            for element in lt.iterator(lista_ufo):
+                lt.addLast(gran_lista, element)
+    return gran_lista
 
 
 
