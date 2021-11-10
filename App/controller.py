@@ -99,3 +99,6 @@ def getMin3(analyzer, primeras_llaves):
     return model.getMin3(analyzer, primeras_llaves)
 def getMax3(analyzer, ultimas_llaves):
     return model.getMax3(analyzer, ultimas_llaves)
+def FindCity(analyzer, ciudad):
+    return model.FindCity(analyzer, ciudad)
+    

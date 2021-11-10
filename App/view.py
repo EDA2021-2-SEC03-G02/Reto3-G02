@@ -96,10 +96,18 @@ while True:
         printUltimosUFOS(cont)
 
     elif int(inputs[0]) == 3:
-        print('Altura del arbol: ' + str(controller.indexAltura(cont)))
+        ciudad = input("Por favor indique la ciudad en la cual quiere hacer la búsqueda")
+        print("La ciudad que eligió tiene un total de " + str(controller.FindCity(cont, ciudad)[2])+ " avistamientos")
+        primeros3 = controller.FindCity(cont, ciudad)[0]
+        ultimos3 = controller.FindCity(cont, ciudad)[1]
+        print("Entre estos, se encuentran los primeros tres (ordenados según su fecha de observación):")
+        printDuration(primeros3)
+        print("Y los últimos tres (ordenados según su fecha de observación):")
+        printDuration(ultimos3)
+        """print('Altura del arbol: ' + str(controller.indexAltura(cont)))
         print('Elementos en el arbol: ' + str(controller.indexSize(cont)))
         print('Llave mayor: ' + str(controller.maxKey(cont)))
-        print('Llave menor: ' + str(controller.minKey(cont)))
+        print('Llave menor: ' + str(controller.minKey(cont)))"""
 
     elif int(inputs[0]) == 4:
         second1 = float(input("Porfavor seleccione la cantidad de segundos con la cual desea iniciar el rango: "))
