@@ -102,13 +102,13 @@ def addCiudadIndex(entrada_ciudad, UFO):
 def FindCity(analyzer, ciudad):
     mapa = analyzer["ciudadIndex"]
     entrada = om.get(mapa, ciudad)
-    entrada_ciudad = me.getValue(entrada, ciudad)
-    nuevo_mapa = entrada_ciudad["firstUFO"]
+    entrada_ciudad = me.getValue(entrada)
+    nuevo_mapa = entrada_ciudad["FirstUFO"]
     tamano = om.size(nuevo_mapa)
     valores = om.valueSet(nuevo_mapa)
     primeras3 = lt.subList(valores, 1, 3)
     ultimas3 = lt.subList(valores, lt.size(valores)-2, 3)
-    return primeras3, ultimas3, nuevo_mapa
+    return primeras3, ultimas3, tamano
 
 
 
