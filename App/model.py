@@ -311,7 +311,7 @@ def updateCoordinatesIndex(map, UFO):
         entrada_longitud = me.getValue(entrada)
         addLongitudIndex(entrada_longitud, UFO)
     return map
-    
+#Crea el mapa nuevo en caso de que la longitud no exista aún    
 def NewLongitudEntry(UFO):
     entrada = {"FirstUFO": None}
     entrada["FirstUFO"] = om.newMap(omaptype='RBT',
@@ -325,6 +325,7 @@ def NewLongitudEntry(UFO):
     else:
         entrada_latitud = me.getValue(entrada)
         addLatitudIndex(entrada_latitud, UFO)
+    return entrada
 
 def NewLatitudeEntry(UFO):
     entrada = {'FirstUFO': None}
@@ -338,7 +339,18 @@ def addLatitudIndex(entrada_latitud, UFO):
     return entrada_latitud
 
 def addLongitudIndex(entrada_longitud, UFO):
-    None
+    first = entrada_longitud["FirstUFO"]
+    latitud = round(float(UFO["latitude"]), 2)
+    entrada = om.get(first, latitud)
+    if entrada is None:
+        entrada_latitud = NewLatitudeEntry(UFO)
+        om.put(first, latitud, entrada_latitud)
+    else:
+        entrada_latitud = me.getValue(entrada)
+        addLatitudIndex(entrada_latitud, UFO)
+    return entrada_longitud
+
+
 
 
 
