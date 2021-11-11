@@ -90,6 +90,9 @@ def maxKey(analyzer):
 def FindCity(analyzer, ciudad):
     return model.FindCity(analyzer, ciudad)
 
+def FindTopCity(analyzer):
+    return model.FindTopCity(analyzer)
+
 #Req 2
 def maxKeySeconds(analyzer):
     return model.maxKeySeconds(analyzer)
