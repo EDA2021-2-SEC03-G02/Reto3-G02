@@ -291,6 +291,7 @@ def addCityIndex(entrada_ciudad, UFO):
     entrada_ciudad['cuenta']+=1
     return entrada_ciudad
 
+#Req 4
 
 def BuscarEnRangoDeFechas(cont, fecha_1, fecha_2):
     Datein= datetime.datetime.strptime(fecha_1, '%Y-%m-%d')
