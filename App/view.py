@@ -159,7 +159,7 @@ while True:
         max3 = controller.getMax3(cont, ultimas_llaves)
         print("Los primeros 3 avistamenientos dentro del rango son: ")
         printDuration(min3)
-        print("---*50")
+        print("---"*50)
         print("Los últimos 3 avistamientos dento del rango son:")
         printDuration(max3)
     elif int(inputs[0]) == 5:

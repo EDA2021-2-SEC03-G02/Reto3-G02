@@ -116,6 +116,20 @@ def FindCity(analyzer, ciudad):
     ultimas3 = lt.subList(valores, lt.size(valores)-2, 3)
     return primeras3, ultimas3, tamano
 
+def FindTopCity(analyzer):
+    mapa = analyzer["ciudadIndex"]
+    llaves = om.keySet(mapa)
+    contador = 0 
+    mayor = ""
+    for llave in lt.iterator(llaves):
+        entrada = om.get(mapa, llave)
+        entrada_ciudad = me.getValue(entrada)
+        nuevo_mapa = entrada_ciudad["FirstUFO"]
+        tamano = om.size(nuevo_mapa)
+        if tamano >= contador:
+            contador = tamano
+            mayor = llave
+    return mayor, contador
 
 
 #Funciones para MAP Req 2 (David)
@@ -304,8 +318,8 @@ def BuscarEnRangoDeFechas(cont, fecha_1, fecha_2):
         contador += primeros_valores['cuenta']
         for ufo in lt.iterator(primeros_valores['FirstUFO']):
             lt.addLast(primera_entrada, ufo)
-
-    return contador, primera_entrada
+    ultimos3 = lt.subList(primera_entrada, lt.size(primera_entrada)-2, 3)
+    return contador, primera_entrada, ultimos3
 
 def encontrarMinimo(analyzer):
     llavemin = om.minKey(analyzer)
