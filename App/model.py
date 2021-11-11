@@ -116,22 +116,6 @@ def FindCity(analyzer, ciudad):
     ultimas3 = lt.subList(valores, lt.size(valores)-2, 3)
     return primeras3, ultimas3, tamano
 
-def FindTopCity(analyzer):
-    mapa = analyzer["ciudadIndex"]
-    llaves = om.keySet(mapa)
-    contador = 0 
-    mayor = ""
-    for llave in lt.iterator(llaves):
-        entrada = om.get(mapa, llave)
-        entrada_ciudad = me.getValue(entrada)
-        nuevo_mapa = entrada_ciudad["FirstUFO"]
-        tamano = om.size(nuevo_mapa)
-        if tamano >= contador:
-            contador = tamano
-            mayor = llave
-    return mayor, contador
-
-
 
 
 #Funciones para MAP Req 2 (David)
@@ -256,11 +240,11 @@ def updatetimeIndex(map, UFO):
     time = datetm1.time()
     entry = om.get(map, time)
     if entry is None:
-        dateentry = NewCityEntry(UFO)
+        dateentry = newDateEntry(UFO)
         om.put(map, time, dateentry)
     else:
         dateentry = me.getValue(entry)
-        addCiudadIndex(dateentry, UFO)
+        addCityIndex(dateentry, UFO)
     return map
 
     
@@ -307,7 +291,6 @@ def addCityIndex(entrada_ciudad, UFO):
     entrada_ciudad['cuenta']+=1
     return entrada_ciudad
 
-#Req 4
 
 def BuscarEnRangoDeFechas(cont, fecha_1, fecha_2):
     Datein= datetime.datetime.strptime(fecha_1, '%Y-%m-%d')
@@ -321,9 +304,8 @@ def BuscarEnRangoDeFechas(cont, fecha_1, fecha_2):
         contador += primeros_valores['cuenta']
         for ufo in lt.iterator(primeros_valores['FirstUFO']):
             lt.addLast(primera_entrada, ufo)
-    ultimos3 = lt.subList(primera_entrada, lt.size(primera_entrada)-2, 3)
-        
-    return contador, primera_entrada, ultimos3
+
+    return contador, primera_entrada
 
 def encontrarMinimo(analyzer):
     llavemin = om.minKey(analyzer)
@@ -390,6 +372,7 @@ def ConseguirTodasEnRangoCoordenadas(analyzer, longitud1, longitud2, latitud1, l
     gran_lista = lt.newList(cmpfunction=compareNames)
     mapa = analyzer["coordinates"]
     lista_longitud = om.keys(mapa, longitud1, longitud2)
+    print(lista_longitud)
     for llave in lt.iterator(lista_longitud):
         entry = om.get(mapa, llave)
         dicc = me.getValue(entry)
